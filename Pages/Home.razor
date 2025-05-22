@@ -1,7 +1,21 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@using Models
+@using Components
 
-<h1>Hello, world!</h1>
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager NavigationManager
 
-Welcome to your new app.
+@code{
+	private string TipoSeleccionado = "Pelicula";
+
+	private List<Media> medias = new();
+	private List<Media> mediaGuardada = new();
+
+	private Pelicula pelicula = new Pelicula();
+	private List<Pelicula> peliculas = new List<Pelicula>();
+
+	private Videojuego videojuego = new Videojuego();
+	private List<Videojuego> videojuegos = new List<Videojuego>();
+
+}
