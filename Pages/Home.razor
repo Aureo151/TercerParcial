@@ -33,12 +33,96 @@
 					<InputText id="titulo" class="form-control" @bind-Value="pelicula.Titulo"/>
 					<ValidationMessage For="() => pelicula.Titulo"/>
 				</div>
+				<div class="col col-4">
+					<label for="director" class="form-label">Director: </label>
+					<InputText id="director" class="form-control" @bind-Value="pelicula.Director" />
+					<ValidationMessage For="() => pelicula.Director" />
+				</div>
+				<div class="col col-6">
+					<label for="genero">Genero: </label>
+					<InputText id="genero" class="form-control" @bind-Value="pelicula.Genero" />
+					<ValidationMessage For="() => pelicula.Genero" />
+				</div>
+						
+			</div>
+			<div class="row mt-3">
+				<div class="col">
+					<label for="lanzamiento">Año Lanzamiento: </label>
+					<InputNumber id="lanzamiento" class="form-control" @bind-Value="pelicula.Lanzamiento" />
+					<ValidationMessage For="() => pelicula.Lanzamiento" />
+				</div>
+				<div class="col">
+					<label for="duracion">Duracion: </label>
+					<InputNumber id="duracion" class="form-control" @bind-Value="pelicula.Duracion" />
+					<ValidationMessage For="() => pelicula.Duracion" />
+				</div>
+				<div class="col">
+					<label for="idioma">Idioma: </label>
+					<InputText id="idioma" class="form-control" @bind-Value="pelicula.Idioma" />
+					<ValidationMessage For="() => pelicula.Idioma" />
+				</div>
+			</div>
+			<div class="row mt-3 text-center">			
+				<div class="col">
+					<button class="btn btn-secondary" type="submit">Guardar</button>
+				</div>
+			</div>
+		</div>
+
+	</EditForm>	
+}
+@if (TipoSeleccionado == "Videojuego")
+{
+	videojuego.Tipo = "Videojuego";
+
+	<EditForm Model="@videojuego" OnValidSubmit="@GuardarVideojuego">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col col-2">
+					<label for="titulo" class="form-label">Titulo</label>
+					<InputText id="titulo" class="form-control" @bind-Value="videojuego.Titulo" />
+					<ValidationMessage For="() => videojuego.Titulo" />
+				</div>
+				<div class="col col-4">
+					<label for="director" class="form-label">Director: </label>
+					<InputText id="director" class="form-control" @bind-Value="videojuego.Director" />
+					<ValidationMessage For="() => videojuego.Director" />
+				</div>
+				<div class="col col-6">
+					<label for="genero">Genero: </label>
+					<InputText id="genero" class="form-control" @bind-Value="videojuego.Genero" />
+					<ValidationMessage For="() => videojuego.Genero" />
+				</div>
+
+			</div>
+			<div class="row mt-3">
+				<div class="col">
+					<label for="lanzamiento">Año Lanzamiento: </label>
+					<InputNumber id="lanzamiento" class="form-control" @bind-Value="videojuego.Lanzamiento" />
+					<ValidationMessage For="() => videojuego.Lanzamiento" />
+				</div>
+				<div class="col">
+					<label for="plataforma">Plataforma: </label>
+					<InputText id="plataforma" class="form-control" @bind-Value="videojuego.Plataforma" />
+					<ValidationMessage For="() => videojuego.Plataforma" />
+				</div>
+				<div class="col">
+					<label for="peso">Peso: </label>
+					<InputNumber id="peso" class="form-control" @bind-Value="videojuego.Peso" />
+					<ValidationMessage For="() => videojuego.Peso" />
+				</div>
+			</div>
+			<div class="row mt-3 text-center">
+				<div class="col">
+					<button class="btn btn-secondary" type="submit">Guardar</button>
+				</div>
 			</div>
 		</div>
 
 	</EditForm>
-
-	
 }
 @code{
 	private string TipoSeleccionado = "Pelicula";
