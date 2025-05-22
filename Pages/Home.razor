@@ -6,6 +6,40 @@
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 @inject NavigationManager NavigationManager
 
+<h1>Formulario para agregar Media</h1>
+
+<div class ="row mt-3">
+	<div class="col col-6">
+		<label for="tipoMedia">Tipo de Media a Agregar</label>
+		<InputSelect id="tipoMedia" class="form-select" @bind-Value="TipoSeleccionado">
+			<option value="Pelicula">Pelicula</option>
+			<option value="Videojuego">Videojuego</option>
+		</InputSelect>
+	</div>
+</div>
+
+@if(TipoSeleccionado == "Pelicula")
+{
+	pelicula.Tipo = "Pelicula";
+
+	<EditForm Model="@pelicula" OnValidSubmit="@GuardarPelicula">
+		<DataAnnotationsValidator/>
+		<ValidationSummary/>
+
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col col-2">
+					<label for="titulo" class="form-label">Titulo</label>
+					<InputText id="titulo" class="form-control" @bind-Value="pelicula.Titulo"/>
+					<ValidationMessage For="() => pelicula.Titulo"/>
+				</div>
+			</div>
+		</div>
+
+	</EditForm>
+
+	
+}
 @code{
 	private string TipoSeleccionado = "Pelicula";
 
@@ -18,4 +52,47 @@
 	private Videojuego videojuego = new Videojuego();
 	private List<Videojuego> videojuegos = new List<Videojuego>();
 
+	private Media ConvertirAMediaBase(Media mediaEspecifica)
+	{
+		return new Media
+			{
+				Titulo = mediaEspecifica.Titulo,
+				Director = mediaEspecifica.Director,
+				Genero = mediaEspecifica.Genero,
+				Lanzamiento = mediaEspecifica.Lanzamiento
+			};
+	}
+
+	private void GuardarPelicula()
+	{
+		peliculas.Add(pelicula);
+
+		var mediaBase = ConvertirAMediaBase(pelicula);
+		medias.Add(mediaBase);
+
+		localStorage.SetItem("archivo_peliculas", peliculas);
+		localStorage.SetItem("archivo_media", medias);
+
+		NavigationManager.NavigateTo("/listado-peliculas");
+	}
+
+	private void GuardarVideojuego()
+	{
+		videojuegos.Add(videojuego);
+
+		var mediaBase = ConvertirAMediaBase(videojuego);
+		medias.Add(mediaBase);
+
+		localStorage.SetItem("archivo_videojuegos", videojuegos);
+		localStorage.SetItem("archivo_media", medias);
+
+		NavigationManager.NavigateTo("/listado-videojuegos");
+	}
+
+	protected override void OnInitialized()
+	{
+		videojuegos = localStorage.GetItem<List<Videojuego>>("archivo_videojuegos") ?? new();
+		peliculas = localStorage.GetItem<List<Pelicula>>("archivo_peliculas") ?? new();
+		medias = localStorage.GetItem<List<Media>>("archivo_media") ?? new();
+	}
 }

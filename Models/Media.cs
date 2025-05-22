@@ -12,5 +12,7 @@ namespace TercerParcial.Models
         public string Genero { get; set; }
         [Required]
         public int Lanzamiento { get; set; }
+        [Required]
+        public string Tipo { get; set; }
     }
 }
