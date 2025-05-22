@@ -1,0 +1,49 @@
+﻿@using Models
+@inject HttpClient Http;
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+
+@if (videojuegos == null)
+{
+	<p><em>Cargando...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Titulo</th>
+				<th>Director</th>
+				<th>Genero</th>
+				<th>Año de Lanzamiento</th>
+				<th>Plataforma</th>
+				<th>Peso</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var videojuego in videojuegos)
+			{
+				<tr>
+					<td>@videojuego.Titulo</td>
+					<td>@videojuego.Director</td>
+					<td>@videojuego.Genero</td>
+					<td>@videojuego.Lanzamiento</td>
+					<td>@videojuego.Plataforma</td>
+					<td>@videojuego.Peso</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+@code {
+	private List<Videojuego> videojuegos = new List<Videojuego>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		var videojuegosGuardados = localStorage.GetItem<List<Videojuego>>("archivo_videojuegos");
+
+		if (videojuegosGuardados != null)
+		{
+			videojuegos = videojuegosGuardados;
+		}
+	}
+}

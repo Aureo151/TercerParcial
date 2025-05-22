@@ -1,0 +1,49 @@
+﻿@using Models
+@inject HttpClient Http;
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+
+@if (peliculas == null)
+{
+	<p><em>Cargando...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Titulo</th>
+				<th>Director</th>
+				<th>Genero</th>
+				<th>Año de Lanzamiento</th>
+				<th>Duracion</th>
+				<th>Idioma</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var pelicula in peliculas)
+			{
+				<tr>
+					<td>@pelicula.Titulo</td>
+					<td>@pelicula.Director</td>
+					<td>@pelicula.Genero</td>
+					<td>@pelicula.Lanzamiento</td>
+					<td>@pelicula.Duracion</td>
+					<td>@pelicula.Idioma</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+@code {
+	private List<Pelicula> peliculas = new List<Pelicula>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		var peliculasGuardadas = localStorage.GetItem<List<Pelicula>>("archivo_peliculas");
+
+		if (peliculasGuardadas != null)
+		{
+			peliculas = peliculasGuardadas;
+		}
+	}
+}

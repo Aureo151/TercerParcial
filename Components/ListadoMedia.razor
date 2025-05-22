@@ -1,0 +1,45 @@
+﻿@using Models
+@inject HttpClient Http;
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+
+@if(medias == null)
+{
+	<p><em>Cargando...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Titulo</th>
+				<th>Director</th>
+				<th>Genero</th>
+				<th>Año de Lanzamiento</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var media in medias)
+			{
+				<tr>
+					<td>@media.Titulo</td>
+					<td>@media.Director</td>
+					<td>@media.Genero</td>
+					<td>@media.Lanzamiento</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+@code {
+	private List<Media> medias = new List<Media>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		var mediaGuardada = localStorage.GetItem<List<Media>>("archivo_media");
+
+		if(mediaGuardada != null)
+		{
+			medias = mediaGuardada;
+		}
+	}
+}
